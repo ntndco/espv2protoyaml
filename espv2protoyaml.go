@@ -16,17 +16,22 @@ const (
 
 // Espv2Config a struct for creating the API config manifest
 type Espv2Config struct {
-	ServiceType   string   `yaml:"type"`
-	ConfigVersion int      `yaml:"config_version"`
-	Name          string   `yaml:"name"`
-	Title         string   `yaml:"title"`
-	APIs          []string `yaml:"apis"`
+	ServiceType   string        `yaml:"type"`
+	ConfigVersion int           `yaml:"config_version"`
+	Name          string        `yaml:"name"`
+	Title         string        `yaml:"title"`
+	APIs          []BackendName `yaml:"apis"`
 	Usage         struct {
 		Rules []UsageRule `yaml:"rules"`
 	} `yaml:"usage"`
 	Backend struct {
 		Rules []BackendRule `yaml:"rules"`
 	} `yaml:"backend"`
+}
+
+// BackendName provides the name for the gRPC service
+type BackendName struct {
+	Name string
 }
 
 // UsageRule required for creating API config manifest
@@ -71,7 +76,12 @@ func (c *Espv2Config) SetEndpointTitle(v string) {
 
 // AppendBackend ...
 func (c *Espv2Config) AppendBackend(v ...string) {
-	c.APIs = append(c.APIs, v...)
+	var bns []BackendName
+	for _, bn := range v {
+		b := BackendName{Name: bn}
+		bns = append(bns, b)
+	}
+	c.APIs = append(c.APIs, bns...)
 }
 
 // AppendBackendRule ...
