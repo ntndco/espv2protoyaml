@@ -9,8 +9,8 @@ You may want this to build api_config.yaml [programmatically](https://cloud.goog
     -backend helloworld.Greeter \
     -endpoint-name hellogrpc.endpoints.YOUR_PROJECT_ID.cloud.goog \
     -endpoint-title helloworld.Greeter \
-    -usage-rule hellogrpc.endpoints.YOUR_PROJECT_ID.cloud.goog.Greeter,true \ //selector,unregisteredCallFlag
-    -backend-rule '*',grpcs://<CLOUD_RUN_NAME>-<HASH>-uc.a.run.app // selector,address
+    -usage-rule hellogrpc.endpoints.YOUR_PROJECT_ID.cloud.goog.Greeter,true \ # selector,unregisteredCallFlag
+    -backend-rule '*',grpcs://<CLOUD_RUN_NAME>-<HASH>-uc.a.run.app # selector,address
 ```
 
 ### Flags
@@ -47,8 +47,8 @@ usageRules := []struct{
   AllowUnregistered bool
 }{
   {
-    Selector: "*",
-    AllowUnregistered: "...",
+    Selector: "...",
+    AllowUnregistered: true,
   }
 }
 
