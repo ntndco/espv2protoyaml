@@ -27,6 +27,9 @@ type Espv2Config struct {
 	Backend struct {
 		Rules []BackendRule `yaml:"rules"`
 	} `yaml:"backend"`
+	HTTP struct {
+		Rules []HTTPRule `yaml:"rules"`
+	} `yaml:"http"`
 }
 
 // BackendName provides the name for the gRPC service
@@ -38,6 +41,12 @@ type BackendName struct {
 type UsageRule struct {
 	Selector               string `yaml:"selector"`
 	AllowUnregisteredCalls bool   `yaml:"allow_unregistered_calls"`
+}
+
+// HTTPRule required for creating API config manifest
+type HTTPRule struct {
+	Selector string `yaml:"selector"`
+	body     string `yaml:"body"`
 }
 
 // BackendRule required for creating API config manifest
@@ -100,6 +109,15 @@ func (c *Espv2Config) AppendUsageRule(selector string, auc bool) {
 		AllowUnregisteredCalls: auc,
 	}
 	c.Usage.Rules = append(c.Usage.Rules, r)
+}
+
+// AppendHTTPRule ...
+func (c *Espv2Config) AppendHTTPRule(selector, body, method, path string) {
+	r := HTTPRule{
+		Selector: selector,
+		body:     body,
+	}
+	c.HTTP.Rules = append(c.HTTP.Rules, r)
 }
 
 // WriteConfig writes config to sink
