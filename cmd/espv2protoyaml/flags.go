@@ -42,8 +42,8 @@ func (br *backendRules) Set(value string) error {
 		return errors.New("Must provide two values")
 	}
 	r := backendRule{
-		Address:  res[0],
-		Selector: res[1],
+		Address:  res[1],
+		Selector: res[0],
 	}
 	*br = append(*br, r)
 	return nil
